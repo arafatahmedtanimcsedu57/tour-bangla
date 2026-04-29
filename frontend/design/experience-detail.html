@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0">
+<title>Tour Bangladesh — Experience Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── Tokens ───────────────────────────────────────── */
+:root {
+  --green-900: #0A2618; --green-800: #1B4332; --green-700: #2D6A4F;
+  --green-600: #40916C; --green-500: #52B788; --green-100: #DCFCE7;
+  --green-50:  #F0FDF4;
+  --terra-600: #C85B3F; --terra-500: #E07A5F; --terra-400: #F4A261;
+  --terra-100: #FFE4D6; --terra-50: #FFF5F0;
+  --neutral-900: #1A1917; --neutral-800: #2A2825; --neutral-700: #403D38;
+  --neutral-600: #5C5751; --neutral-500: #79746B; --neutral-400: #A8A49C;
+  --neutral-300: #D1CEC7; --neutral-200: #E8E6E1; --neutral-100: #F5F4F0;
+  --neutral-50:  #FAFAF8; --neutral-0: #FFFFFF;
+  --yellow-400: #FACC15;
+  --font-display: 'Fraunces', serif;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+  --radius-xl: 16px; --radius-2xl: 24px; --radius-full: 9999px;
+  --nav-h: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+  max-width: 375px;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Gallery ──────────────────────────────────────── */
+.gallery {
+  position: relative;
+  height: 300px;
+  background: var(--neutral-800);
+  overflow: hidden;
+}
+
+.gallery-slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+}
+
+.gallery-slide {
+  flex-shrink: 0;
+  width: 375px;
+  height: 100%;
+}
+.gallery-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gallery gradient overlays */
+.gallery::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+.gallery::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Gallery top controls */
+.gallery-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  z-index: 20;
+}
+
+.gallery-back, .gallery-action {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff;
+  transition: background 0.15s;
+}
+.gallery-back:active, .gallery-action:active {
+  background: rgba(255,255,255,0.32);
+}
+.gallery-actions { display: flex; gap: 8px; }
+
+/* Gallery counter */
+.gallery-counter {
+  position: absolute;
+  bottom: 14px; right: 16px;
+  z-index: 20;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+}
+
+/* Dots */
+.gallery-dots {
+  position: absolute;
+  bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex; gap: 5px; align-items: center;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.dot.active {
+  background: #fff;
+  width: 16px;
+  border-radius: var(--radius-full);
+}
+
+/* ── Content ──────────────────────────────────────── */
+.content {
+  background: var(--neutral-0);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  margin-top: -20px;
+  position: relative;
+  z-index: 5;
+  padding: 24px 20px 0;
+  min-height: calc(100vh - 280px);
+}
+
+/* Location pill */
+.location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--green-50);
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-full);
+  padding: 4px 12px 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-700);
+  margin-bottom: 12px;
+}
+.location-pill svg { width: 12px; height: 12px; }
+
+.exp-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+  margin-bottom: 16px;
+}
+
+/* Author row */
+.author-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--neutral-100);
+  margin-bottom: 16px;
+}
+.author-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--neutral-200);
+  flex-shrink: 0;
+}
+.author-info { flex: 1; }
+.author-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-900);
+}
+.author-meta {
+  font-size: 12px;
+  color: var(--neutral-400);
+  margin-top: 1px;
+}
+.follow-btn {
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--green-700);
+  background: transparent;
+  color: var(--green-700);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.follow-btn.following {
+  background: var(--green-700);
+  color: #fff;
+}
+
+/* Stats strip */
+.stats-strip {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr;
+  gap: 0;
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-xl);
+  padding: 14px 0;
+  margin-bottom: 20px;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 0 8px;
+}
+.stat-divider { background: var(--neutral-200); }
+.stat-icon { font-size: 14px; }
+.stat-val {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  letter-spacing: -0.2px;
+}
+.stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--neutral-400);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Stars */
+.stars-row {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.star { width: 14px; height: 14px; color: var(--yellow-400); }
+.star.empty { color: var(--neutral-200); }
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.tag {
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-100);
+  border: 1px solid var(--neutral-200);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--neutral-600);
+}
+
+/* ── Sections ─────────────────────────────────────── */
+.section { margin-bottom: 24px; }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  letter-spacing: -0.2px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.section-title-icon {
+  width: 28px; height: 28px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.section-title-icon.green { background: var(--green-50); }
+.section-title-icon.terra { background: var(--terra-50); }
+.section-title-icon.neutral { background: var(--neutral-100); }
+
+.body-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--neutral-600);
+}
+.body-text.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green-700);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Travel Info Cards */
+.info-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.info-card {
+  background: var(--neutral-50);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-lg);
+  padding: 12px;
+}
+.info-card-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--neutral-400);
+  margin-bottom: 4px;
+}
+.info-card-value {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--neutral-900);
+  line-height: 1.3;
+}
+.info-card-value.green { color: var(--green-700); }
+.info-card-sub {
+  font-size: 11px;
+  color: var(--neutral-400);
+  margin-top: 2px;
+}
+
+/* Tips list */
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tip-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.tip-bullet {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--green-50);
+  border: 1px solid var(--green-100);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 10px;
+  color: var(--green-700);
+  font-weight: 700;
+}
+.tip-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--neutral-600);
+}
+
+/* Cost breakdown */
+.cost-rows { display: flex; flex-direction: column; gap: 0; }
+.cost-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--neutral-100);
+}
+.cost-row:last-child { border-bottom: none; }
+.cost-row-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px;
+  color: var(--neutral-600);
+}
+.cost-row-icon {
+  width: 26px; height: 26px;
+  border-radius: var(--radius-md);
+  background: var(--neutral-100);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+}
+.cost-row-amount {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--neutral-800);
+}
+.cost-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: var(--green-50);
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-lg);
+}
+.cost-total-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green-700);
+}
+.cost-total-amount {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--green-700);
+}
+
+/* Map placeholder */
+.map-placeholder {
+  height: 170px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  background: #e8f0e8;
+  border: 1px solid var(--neutral-200);
+}
+.map-placeholder img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.map-pin-large {
+  width: 40px; height: 40px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--green-700);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(45,106,79,0.4);
+}
+.map-pin-large::after {
+  content: '';
+  display: block;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #fff;
+}
+.map-expand-btn {
+  position: absolute;
+  bottom: 10px; right: 10px;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-700);
+  cursor: pointer;
+}
+
+/* Route stops */
+.route-stops {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.route-stop {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  position: relative;
+}
+.route-stop:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 9px; top: 22px;
+  width: 2px;
+  height: calc(100% + 2px);
+  background: var(--neutral-200);
+}
+.stop-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--green-700);
+  background: #fff;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.stop-dot.start { background: var(--green-700); }
+.stop-dot.start::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+.stop-dot.end { border-color: var(--terra-500); background: var(--terra-500); }
+.stop-dot.end::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+.stop-info { padding-bottom: 16px; }
+.stop-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--neutral-800);
+  line-height: 1.3;
+}
+.stop-desc {
+  font-size: 12px;
+  color: var(--neutral-400);
+  margin-top: 2px;
+}
+
+/* Photo grid */
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 3px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.photo-thumb {
+  aspect-ratio: 1;
+  overflow: hidden;
+  position: relative;
+}
+.photo-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.photo-thumb:active img { transform: scale(1.05); }
+.photo-more-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ── Comments ─────────────────────────────────────── */
+.comments-section {
+  background: var(--neutral-50);
+  margin: 0 -20px;
+  padding: 20px 20px;
+  border-top: 1px solid var(--neutral-100);
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: var(--neutral-0);
+  border: 1px solid var(--neutral-200);
+  border-radius: var(--radius-full);
+}
+.comment-input-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.comment-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--neutral-900);
+  outline: none;
+}
+.comment-input::placeholder { color: var(--neutral-400); }
+.comment-send {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--green-700);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.comment-list { display: flex; flex-direction: column; gap: 16px; }
+.comment-item { display: flex; gap: 10px; }
+.comment-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.comment-bubble { flex: 1; }
+.comment-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.comment-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--neutral-800);
+}
+.comment-time {
+  font-size: 11px;
+  color: var(--neutral-400);
+}
+.comment-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--neutral-600);
+}
+.comment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+.comment-action {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--neutral-400);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex; align-items: center; gap: 3px;
+}
+.comment-action.liked { color: var(--terra-500); }
+
+.view-more-comments {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green-700);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 100%;
+}
+
+/* ── Bottom Action Bar ────────────────────────────── */
+.bottom-bar {
+  position: fixed;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 375px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--neutral-200);
+  padding: 12px 20px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+}
+.like-bar-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 0;
+  border-radius: var(--radius-xl);
+  border: 1.5px solid var(--neutral-200);
+  background: var(--neutral-0);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-600);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.like-bar-btn svg { width: 18px; height: 18px; }
+.like-bar-btn.liked {
+  border-color: var(--terra-100);
+  background: var(--terra-50);
+  color: var(--terra-500);
+}
+.like-bar-btn.liked svg { fill: var(--terra-500); stroke: var(--terra-500); }
+
+.comment-bar-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 0;
+  border-radius: var(--radius-xl);
+  border: 1.5px solid var(--neutral-200);
+  background: var(--neutral-0);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--neutral-600);
+  cursor: pointer;
+}
+.comment-bar-btn svg { width: 18px; height: 18px; }
+
+.share-bar-btn {
+  width: 46px; height: 46px;
+  border-radius: var(--radius-xl);
+  border: 1.5px solid var(--neutral-200);
+  background: var(--neutral-0);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--neutral-600);
+  flex-shrink: 0;
+}
+.share-bar-btn svg { width: 18px; height: 18px; }
+
+/* Padding for fixed bar */
+.bottom-spacer { height: 90px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 0; }
+</style>
+</head>
+<body>
+
+<!-- Gallery -->
+<div class="gallery" id="gallery">
+  <div class="gallery-slides" id="slides">
+    <div class="gallery-slide">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=750&h=600&fit=crop&q=80" alt="Sundarbans 1">
+    </div>
+    <div class="gallery-slide">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=750&h=600&fit=crop&q=80" alt="Sundarbans 2">
+    </div>
+    <div class="gallery-slide">
+      <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=750&h=600&fit=crop&q=80" alt="Sundarbans 3">
+    </div>
+    <div class="gallery-slide">
+      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=750&h=600&fit=crop&q=80" alt="Sundarbans 4">
+    </div>
+  </div>
+
+  <!-- Top controls -->
+  <div class="gallery-top">
+    <button class="gallery-back" aria-label="Back">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="m12 5-7 7 7 7"/></svg>
+    </button>
+    <div class="gallery-actions">
+      <button class="gallery-action" aria-label="Save">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+      </button>
+      <button class="gallery-action" aria-label="Share">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dots -->
+  <div class="gallery-dots" id="dots">
+    <div class="dot active" data-idx="0"></div>
+    <div class="dot" data-idx="1"></div>
+    <div class="dot" data-idx="2"></div>
+    <div class="dot" data-idx="3"></div>
+  </div>
+
+  <div class="gallery-counter" id="counter">1 / 4</div>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+
+  <!-- Location + Title -->
+  <div class="location-pill">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+    Khulna Division
+  </div>
+
+  <h1 class="exp-title">Three Days Deep in the Sundarbans Mangrove Forest</h1>
+
+  <!-- Author -->
+  <div class="author-row">
+    <img src="https://i.pravatar.cc/80?img=3" alt="Rafi" class="author-avatar">
+    <div class="author-info">
+      <div class="author-name">Rafi Hossain</div>
+      <div class="author-meta">248 followers · 14 posts</div>
+    </div>
+    <button class="follow-btn" id="followBtn">Follow</button>
+  </div>
+
+  <!-- Stats strip -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stars-row">
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <div class="stat-val">5.0</div>
+      <div class="stat-label">Rating</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-icon">৳</div>
+      <div class="stat-val green" style="color:var(--green-700)">3,200</div>
+      <div class="stat-label">Est. Cost</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-icon">🗓</div>
+      <div class="stat-val">3</div>
+      <div class="stat-label">Days</div>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  <div class="tags">
+    <span class="tag">#sundarbans</span>
+    <span class="tag">#nature</span>
+    <span class="tag">#wildlife</span>
+    <span class="tag">#mangrove</span>
+    <span class="tag">#khulna</span>
+  </div>
+
+  <!-- About -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-title-icon green">📖</div>
+      About this Experience
+    </div>
+    <p class="body-text collapsed" id="descText">
+      The Sundarbans is the world's largest mangrove forest, straddling Bangladesh and India. I spent three incredible days navigating its labyrinthine waterways, spotting Royal Bengal Tigers from a safe distance, and sleeping on a wooden boat under a sky full of stars. The forest is alive in a way that's hard to describe — every rustle in the undergrowth, every splash in the water keeps you on the edge of your seat. We saw saltwater crocodiles, spotted deer, and a huge variety of birds. The guides from Mongla were exceptional — knowledgeable, cautious, and passionate about conservation.
+    </p>
+    <button class="read-more" id="readMoreBtn">
+      Read more
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- Travel Info -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-title-icon neutral">📅</div>
+      Travel Info
+    </div>
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-card-label">From</div>
+        <div class="info-card-value">Mar 10, 2024</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">To</div>
+        <div class="info-card-value">Mar 12, 2024</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Best Season</div>
+        <div class="info-card-value">Oct – Mar</div>
+        <div class="info-card-sub">Winter months</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Group Size</div>
+        <div class="info-card-value">4 people</div>
+        <div class="info-card-sub">Min. recommended</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-title-icon green">💡</div>
+      Travel Tips
+    </div>
+    <div class="tips-list">
+      <div class="tip-item">
+        <div class="tip-bullet">1</div>
+        <p class="tip-text">Book your guide from Mongla forest office — avoid unofficial operators for safety.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-bullet">2</div>
+        <p class="tip-text">Carry mosquito repellent and long-sleeved clothes — the insects are fierce after sunset.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-bullet">3</div>
+        <p class="tip-text">Bring cash — there are no ATMs once you enter the forest area.</p>
+      </div>
+      <div class="tip-item">
+        <div class="tip-bullet">4</div>
+        <p class="tip-text">Stay silent on the boat — noise scares away wildlife, especially deer and birds.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cost Breakdown -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-title-icon terra">💰</div>
+      Cost Breakdown
+    </div>
+    <div class="cost-rows">
+      <div class="cost-row">
+        <div class="cost-row-label">
+          <div class="cost-row-icon">🚌</div>
+          Transport (Dhaka–Khulna)
+        </div>
+        <div class="cost-row-amount">৳ 800</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-row-label">
+          <div class="cost-row-icon">🚢</div>
+          Boat hire (3 days)
+        </div>
+        <div class="cost-row-amount">৳ 1,200</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-row-label">
+          <div class="cost-row-icon">🏕</div>
+          Accommodation
+        </div>
+        <div class="cost-row-amount">৳ 600</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-row-label">
+          <div class="cost-row-icon">🍽</div>
+          Food & drinks
+        </div>
+        <div class="cost-row-amount">৳ 450</div>
+      </div>
+      <div class="cost-row">
+        <div class="cost-row-label">
+          <div class="cost-row-icon">🎫</div>
+          Entry permits
+        </div>
+        <div class="cost-row-amount">৳ 150</div>
+      </div>
+    </div>
+    <div class="cost-total-row">
+      <span class="cost-total-label">Total (per person)</span>
+      <span class="cost-total-amount">৳ 3,200</span>
+    </div>
+  </div>
+
+  <!-- Map & Route -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-title-icon green">🗺</div>
+      Map & Route
+    </div>
+    <div class="map-placeholder">
+      <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=700&h=340&fit=crop&q=80" alt="Map">
+      <div class="map-overlay">
+        <div class="map-pin-large"></div>
+      </div>
+      <button class="map-expand-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        View full map
+      </button>
+    </div>
+    <div class="route-stops">
+      <div class="route-stop">
+        <div class="stop-dot start"></div>
+        <div class="stop-info">
+          <div class="stop-name">Dhaka — Sadarghat Launch Terminal</div>
+          <div class="stop-desc">Night launch at 8 PM · 8h journey</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot"></div>
+        <div class="stop-info">
+          <div class="stop-name">Mongla Port</div>
+          <div class="stop-desc">Register at forest office, hire guide</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot"></div>
+        <div class="stop-info">
+          <div class="stop-name">Karamjal Wildlife Centre</div>
+          <div class="stop-desc">Spotted deer, crocodile breeding</div>
+        </div>
+      </div>
+      <div class="route-stop">
+        <div class="stop-dot end"></div>
+        <div class="stop-info">
+          <div class="stop-name">Kotka Beach & Forest Camp</div>
+          <div class="stop-desc">Tiger territory · overnight stay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Grid -->
+  <div class="section">
+    <div class="section-title">
+      <div class="section-title-icon neutral">📷</div>
+      All Photos
+    </div>
+    <div class="photo-grid">
+      <div class="photo-thumb"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop" alt=""></div>
+      <div class="photo-thumb"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop" alt=""></div>
+      <div class="photo-thumb"><img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=200&h=200&fit=crop" alt=""></div>
+      <div class="photo-thumb"><img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=200&h=200&fit=crop" alt=""></div>
+      <div class="photo-thumb"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=200&h=200&fit=crop" alt=""></div>
+      <div class="photo-thumb">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop" alt="">
+        <div class="photo-more-overlay">+4</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <div class="comments-section">
+    <div class="section-title" style="margin-bottom:16px">
+      <div class="section-title-icon neutral">💬</div>
+      Comments <span style="color:var(--neutral-400);font-family:var(--font-body);font-size:14px;font-weight:400"> · 32</span>
+    </div>
+
+    <div class="comment-input-row">
+      <img src="https://i.pravatar.cc/56?img=8" class="comment-input-avatar" alt="You">
+      <input class="comment-input" type="text" placeholder="Add a comment…">
+      <button class="comment-send">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+    <div class="comment-list">
+      <div class="comment-item">
+        <img src="https://i.pravatar.cc/64?img=15" class="comment-avatar" alt="">
+        <div class="comment-bubble">
+          <div class="comment-header">
+            <span class="comment-name">Nadia Islam</span>
+            <span class="comment-time">2 days ago</span>
+          </div>
+          <p class="comment-text">This is exactly the kind of trip I've been dreaming about! Did you need any special permits beforehand?</p>
+          <div class="comment-actions">
+            <button class="comment-action liked">❤ 12</button>
+            <button class="comment-action">Reply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-item">
+        <img src="https://i.pravatar.cc/64?img=22" class="comment-avatar" alt="">
+        <div class="comment-bubble">
+          <div class="comment-header">
+            <span class="comment-name">Tanvir Ahmed</span>
+            <span class="comment-time">3 days ago</span>
+          </div>
+          <p class="comment-text">Great photos! The route you took through Kotka is probably the best one for wildlife spotting. Went last winter and saw two tigers! 🐯</p>
+          <div class="comment-actions">
+            <button class="comment-action">❤ 8</button>
+            <button class="comment-action">Reply</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-item">
+        <img src="https://i.pravatar.cc/64?img=31" class="comment-avatar" alt="">
+        <div class="comment-bubble">
+          <div class="comment-header">
+            <span class="comment-name">Priya Roy</span>
+            <span class="comment-time">4 days ago</span>
+          </div>
+          <p class="comment-text">The cost breakdown is so helpful, thank you! ৳3,200 is very reasonable for 3 days.</p>
+          <div class="comment-actions">
+            <button class="comment-action">❤ 5</button>
+            <button class="comment-action">Reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="view-more-comments">View all 32 comments →</button>
+  </div>
+
+  <div class="bottom-spacer"></div>
+</div>
+
+<!-- Bottom Action Bar -->
+<div class="bottom-bar">
+  <button class="like-bar-btn" id="likeBarBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    248 Likes
+  </button>
+  <button class="comment-bar-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    32 Comments
+  </button>
+  <button class="share-bar-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  </button>
+</div>
+
+<script>
+// Gallery swipe
+let cur = 0;
+const slides = document.getElementById('slides');
+const dots = document.querySelectorAll('.dot');
+const counter = document.getElementById('counter');
+const total = 4;
+
+function goTo(idx) {
+  cur = Math.max(0, Math.min(total - 1, idx));
+  slides.style.transform = `translateX(-${cur * 375}px)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  counter.textContent = `${cur + 1} / ${total}`;
+}
+
+// Touch swipe
+let startX = 0;
+const gallery = document.getElementById('gallery');
+gallery.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+gallery.addEventListener('touchend', e => {
+  const diff = startX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 40) goTo(cur + (diff > 0 ? 1 : -1));
+});
+dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.idx)));
+
+// Read more
+const descText = document.getElementById('descText');
+const readMoreBtn = document.getElementById('readMoreBtn');
+let expanded = false;
+readMoreBtn.addEventListener('click', () => {
+  expanded = !expanded;
+  descText.classList.toggle('collapsed', !expanded);
+  readMoreBtn.innerHTML = expanded
+    ? 'Read less <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 15-6-6-6 6"/></svg>'
+    : 'Read more <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>';
+});
+
+// Follow toggle
+const followBtn = document.getElementById('followBtn');
+followBtn.addEventListener('click', () => {
+  followBtn.classList.toggle('following');
+  followBtn.textContent = followBtn.classList.contains('following') ? 'Following' : 'Follow';
+});
+
+// Like toggle
+const likeBarBtn = document.getElementById('likeBarBtn');
+likeBarBtn.addEventListener('click', () => {
+  likeBarBtn.classList.toggle('liked');
+  const liked = likeBarBtn.classList.contains('liked');
+  likeBarBtn.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    ${liked ? 249 : 248} Likes`;
+});
+</script>
+</body>
+</html>

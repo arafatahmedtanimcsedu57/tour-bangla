@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0">
+<title>Tour Bangladesh — Create Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-900:#0A2618;--green-800:#1B4332;--green-700:#2D6A4F;
+  --green-600:#40916C;--green-500:#52B788;--green-100:#DCFCE7;--green-50:#F0FDF4;
+  --terra-600:#C85B3F;--terra-500:#E07A5F;--terra-400:#F4A261;
+  --terra-100:#FFE4D6;--terra-50:#FFF5F0;
+  --neutral-900:#1A1917;--neutral-800:#2A2825;--neutral-700:#403D38;
+  --neutral-600:#5C5751;--neutral-500:#79746B;--neutral-400:#A8A49C;
+  --neutral-300:#D1CEC7;--neutral-200:#E8E6E1;--neutral-100:#F5F4F0;
+  --neutral-50:#FAFAF8;--neutral-0:#FFFFFF;
+  --yellow-400:#FACC15;
+  --font-display:'Fraunces',serif;
+  --font-body:'Plus Jakarta Sans',sans-serif;
+  --radius-sm:4px;--radius-md:8px;--radius-lg:12px;
+  --radius-xl:16px;--radius-2xl:24px;--radius-full:9999px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{
+  font-family:var(--font-body);
+  background:var(--neutral-50);
+  color:var(--neutral-900);
+  max-width:375px;
+  margin:0 auto;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── Header ── */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(250,250,248,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--neutral-200);
+  padding:14px 20px;
+  display:flex;align-items:center;gap:12px;
+}
+.back-btn{
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--neutral-200);
+  background:var(--neutral-0);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--neutral-700);flex-shrink:0;
+}
+.header-title{
+  flex:1;
+  font-family:var(--font-display);
+  font-size:17px;font-weight:600;
+  color:var(--neutral-900);letter-spacing:-0.2px;
+}
+.draft-btn{
+  font-size:13px;font-weight:600;
+  color:var(--neutral-500);
+  background:none;border:none;cursor:pointer;padding:4px 0;
+}
+
+/* ── Progress ── */
+.progress-wrap{
+  padding:16px 20px 0;
+  background:var(--neutral-0);
+}
+.steps-row{
+  display:flex;align-items:center;gap:0;
+  margin-bottom:10px;
+}
+.step-item{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  position:relative;cursor:pointer;
+}
+.step-item:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  top:14px;left:calc(50% + 14px);
+  right:calc(-50% + 14px);
+  height:2px;
+  background:var(--neutral-200);
+  transition:background 0.3s;
+}
+.step-item.done:not(:last-child)::after,
+.step-item.active:not(:last-child)::after{
+  background:var(--green-500);
+}
+.step-circle{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid var(--neutral-200);
+  background:var(--neutral-0);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:var(--neutral-400);
+  transition:all 0.25s;z-index:1;position:relative;
+}
+.step-item.done .step-circle{
+  background:var(--green-700);border-color:var(--green-700);color:#fff;
+}
+.step-item.active .step-circle{
+  background:var(--green-700);border-color:var(--green-700);color:#fff;
+  box-shadow:0 0 0 4px rgba(45,106,79,0.15);
+}
+.step-label{
+  font-size:9px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.5px;
+  color:var(--neutral-400);
+  white-space:nowrap;
+}
+.step-item.active .step-label,.step-item.done .step-label{color:var(--green-700);}
+
+.progress-bar-track{
+  height:3px;background:var(--neutral-100);
+  border-radius:var(--radius-full);
+  margin-bottom:0;
+  overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--green-700),var(--green-500));
+  border-radius:var(--radius-full);
+  transition:width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Step panels ── */
+.steps-container{
+  overflow:hidden;
+  position:relative;
+}
+.step-panel{
+  display:none;
+  padding:24px 20px;
+  animation:panelIn 0.3s ease both;
+}
+.step-panel.active{display:block;}
+@keyframes panelIn{
+  from{opacity:0;transform:translateX(20px);}
+  to{opacity:1;transform:translateX(0);}
+}
+
+.panel-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:1px;
+  text-transform:uppercase;color:var(--green-700);margin-bottom:6px;
+}
+.panel-title{
+  font-family:var(--font-display);
+  font-size:22px;font-weight:600;
+  color:var(--neutral-900);letter-spacing:-0.3px;
+  margin-bottom:4px;line-height:1.3;
+}
+.panel-subtitle{
+  font-size:13px;color:var(--neutral-500);
+  margin-bottom:24px;line-height:1.5;
+}
+
+/* ── Form fields ── */
+.field{margin-bottom:18px;}
+.field-label{
+  display:block;
+  font-size:12px;font-weight:600;
+  color:var(--neutral-700);
+  text-transform:uppercase;letter-spacing:0.5px;
+  margin-bottom:7px;
+}
+.field-label span{color:var(--terra-500);margin-left:2px;}
+
+.field-input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--neutral-200);
+  border-radius:var(--radius-lg);
+  font-family:var(--font-body);font-size:14px;
+  color:var(--neutral-900);background:var(--neutral-0);
+  outline:none;transition:border-color 0.18s,box-shadow 0.18s;
+  -webkit-appearance:none;
+}
+.field-input:focus{
+  border-color:var(--green-700);
+  box-shadow:0 0 0 3px rgba(45,106,79,0.12);
+}
+.field-input::placeholder{color:var(--neutral-400);}
+
+textarea.field-input{
+  resize:none;height:110px;line-height:1.6;
+}
+
+.field-hint{
+  font-size:11px;color:var(--neutral-400);margin-top:5px;
+}
+.field-count{
+  font-size:11px;color:var(--neutral-400);
+  text-align:right;margin-top:4px;
+}
+
+/* Category grid */
+.category-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+}
+.category-card{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:14px 8px;
+  border:1.5px solid var(--neutral-200);
+  border-radius:var(--radius-xl);
+  background:var(--neutral-0);
+  cursor:pointer;transition:all 0.18s;
+}
+.category-card.selected{
+  border-color:var(--green-700);
+  background:var(--green-50);
+  box-shadow:0 0 0 3px rgba(45,106,79,0.1);
+}
+.category-icon{font-size:22px;}
+.category-name{
+  font-size:11px;font-weight:600;
+  color:var(--neutral-600);text-align:center;
+}
+.category-card.selected .category-name{color:var(--green-700);}
+
+/* Location select */
+.location-row{display:flex;gap:8px;}
+.location-row .field{flex:1;margin-bottom:0;}
+
+/* ── Photo Upload (Step 2) ── */
+.upload-zone{
+  border:2px dashed var(--neutral-300);
+  border-radius:var(--radius-2xl);
+  padding:32px 20px;
+  text-align:center;
+  background:var(--neutral-50);
+  cursor:pointer;
+  transition:all 0.2s;
+  margin-bottom:16px;
+}
+.upload-zone:active{
+  border-color:var(--green-700);
+  background:var(--green-50);
+}
+.upload-icon{
+  width:52px;height:52px;
+  border-radius:var(--radius-xl);
+  background:var(--neutral-100);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 12px;
+  font-size:22px;
+}
+.upload-title{
+  font-family:var(--font-display);
+  font-size:16px;font-weight:600;
+  color:var(--neutral-800);margin-bottom:4px;
+}
+.upload-sub{font-size:12px;color:var(--neutral-400);line-height:1.5;}
+.upload-sub strong{color:var(--green-700);}
+
+.photo-grid-upload{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+}
+.photo-thumb-upload{
+  aspect-ratio:1;border-radius:var(--radius-lg);overflow:hidden;
+  position:relative;background:var(--neutral-100);
+}
+.photo-thumb-upload img{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.photo-remove{
+  position:absolute;top:4px;right:4px;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(0,0,0,0.55);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;border:none;color:#fff;
+}
+.photo-cover-badge{
+  position:absolute;bottom:4px;left:4px;
+  background:rgba(45,106,79,0.85);
+  color:#fff;font-size:9px;font-weight:700;
+  letter-spacing:0.3px;text-transform:uppercase;
+  padding:2px 6px;border-radius:var(--radius-sm);
+}
+.add-more-thumb{
+  aspect-ratio:1;border-radius:var(--radius-lg);
+  border:2px dashed var(--neutral-300);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;cursor:pointer;background:var(--neutral-50);
+  transition:all 0.18s;
+}
+.add-more-thumb:active{border-color:var(--green-700);background:var(--green-50);}
+.add-more-thumb span{font-size:10px;font-weight:600;color:var(--neutral-400);}
+
+.photo-tip{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:12px 14px;
+  background:var(--terra-50);border:1px solid var(--terra-100);
+  border-radius:var(--radius-lg);margin-top:16px;
+}
+.photo-tip-icon{font-size:14px;flex-shrink:0;margin-top:1px;}
+.photo-tip-text{font-size:12px;color:var(--terra-600);line-height:1.5;}
+
+/* ── Map (Step 3) ── */
+.map-container{
+  height:220px;border-radius:var(--radius-xl);overflow:hidden;
+  position:relative;border:1.5px solid var(--neutral-200);
+  background:#d4e8d4;margin-bottom:16px;
+}
+.map-container img{
+  width:100%;height:100%;object-fit:cover;opacity:0.8;
+}
+.map-container::after{
+  content:'Tap to place your pin';
+  position:absolute;bottom:12px;left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);
+  border:1px solid var(--neutral-200);
+  border-radius:var(--radius-full);
+  padding:6px 14px;font-size:12px;font-weight:600;
+  color:var(--neutral-700);white-space:nowrap;
+}
+.map-pin-placed{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-100%);
+  display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;
+}
+.pin-head{
+  width:32px;height:32px;border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  background:var(--green-700);
+  box-shadow:0 3px 10px rgba(45,106,79,0.4);
+  display:flex;align-items:center;justify-content:center;
+}
+.pin-head::after{
+  content:'';width:12px;height:12px;border-radius:50%;background:#fff;
+}
+.pin-shadow{
+  width:10px;height:4px;border-radius:50%;
+  background:rgba(0,0,0,0.2);margin-top:2px;
+}
+.map-controls{
+  position:absolute;top:12px;right:12px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.map-ctrl-btn{
+  width:32px;height:32px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(6px);
+  border:1px solid var(--neutral-200);
+  border-radius:var(--radius-md);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--neutral-700);font-size:16px;font-weight:700;
+}
+
+.route-toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px;
+  background:var(--neutral-0);
+  border:1.5px solid var(--neutral-200);
+  border-radius:var(--radius-xl);
+  margin-bottom:16px;cursor:pointer;
+}
+.route-toggle-info{flex:1;}
+.route-toggle-label{font-size:14px;font-weight:600;color:var(--neutral-900);}
+.route-toggle-sub{font-size:12px;color:var(--neutral-400);margin-top:2px;}
+.toggle-switch{
+  width:44px;height:24px;border-radius:var(--radius-full);
+  background:var(--neutral-200);position:relative;
+  transition:background 0.2s;flex-shrink:0;
+}
+.toggle-switch.on{background:var(--green-700);}
+.toggle-knob{
+  position:absolute;top:3px;left:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.15);
+  transition:transform 0.2s;
+}
+.toggle-switch.on .toggle-knob{transform:translateX(20px);}
+
+.route-stops-editor{
+  display:flex;flex-direction:column;gap:0;
+  padding:14px;
+  background:var(--neutral-0);
+  border:1.5px solid var(--neutral-200);
+  border-radius:var(--radius-xl);
+  margin-bottom:16px;
+}
+.route-stop-row{
+  display:flex;gap:10px;align-items:center;
+  padding:8px 0;
+  border-bottom:1px solid var(--neutral-100);
+}
+.route-stop-row:last-child{border-bottom:none;}
+.stop-indicator{
+  width:10px;height:10px;border-radius:50%;
+  border:2px solid var(--green-700);background:#fff;
+  flex-shrink:0;
+}
+.stop-indicator.filled{background:var(--green-700);}
+.stop-input{
+  flex:1;border:none;background:transparent;
+  font-family:var(--font-body);font-size:13px;
+  color:var(--neutral-900);outline:none;
+  padding:2px 0;
+}
+.stop-input::placeholder{color:var(--neutral-400);}
+.stop-drag{
+  color:var(--neutral-300);cursor:grab;flex-shrink:0;
+  font-size:16px;letter-spacing:-3px;
+}
+.add-stop-btn{
+  display:flex;align-items:center;gap:6px;
+  margin-top:8px;padding:0;
+  background:none;border:none;
+  font-family:var(--font-body);font-size:13px;font-weight:600;
+  color:var(--green-700);cursor:pointer;
+}
+
+/* ── Travel Details (Step 4) ── */
+.date-row{display:flex;gap:8px;}
+.date-row .field{flex:1;margin-bottom:0;}
+
+.cost-inputs{display:flex;flex-direction:column;gap:0;}
+.cost-input-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  border:1.5px solid var(--neutral-200);
+  border-radius:0;background:var(--neutral-0);
+  border-bottom:none;
+}
+.cost-input-row:first-child{border-radius:var(--radius-lg) var(--radius-lg) 0 0;}
+.cost-input-row:last-child{
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  border-bottom:1.5px solid var(--neutral-200);
+}
+.cost-input-row:focus-within{
+  border-color:var(--green-700);z-index:1;position:relative;
+}
+.cost-row-icon{
+  width:28px;height:28px;border-radius:var(--radius-md);
+  background:var(--neutral-100);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.cost-row-label{flex:1;font-size:13px;color:var(--neutral-600);}
+.cost-row-input{
+  width:90px;border:none;background:transparent;
+  font-family:var(--font-body);font-size:14px;font-weight:600;
+  color:var(--neutral-900);text-align:right;outline:none;
+}
+.cost-row-input::placeholder{color:var(--neutral-400);}
+.bdt-symbol{font-size:14px;font-weight:600;color:var(--neutral-400);}
+
+.rating-select{
+  display:flex;gap:8px;margin-top:2px;
+}
+.rating-star-btn{
+  font-size:28px;background:none;border:none;cursor:pointer;
+  color:var(--neutral-200);transition:all 0.15s;
+  line-height:1;padding:0;
+}
+.rating-star-btn.active{color:var(--yellow-400);}
+.rating-star-btn:active{transform:scale(1.2);}
+
+/* ── Review (Step 5) ── */
+.review-card{
+  background:var(--neutral-0);
+  border:1.5px solid var(--neutral-200);
+  border-radius:var(--radius-2xl);
+  overflow:hidden;margin-bottom:16px;
+}
+.review-photo{
+  height:160px;position:relative;overflow:hidden;
+}
+.review-photo img{width:100%;height:100%;object-fit:cover;}
+.review-photo-count{
+  position:absolute;bottom:8px;right:8px;
+  background:rgba(0,0,0,0.5);color:#fff;
+  font-size:11px;font-weight:600;
+  padding:3px 9px;border-radius:var(--radius-full);
+}
+.review-body{padding:16px;}
+.review-location{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:600;color:var(--green-700);
+  margin-bottom:6px;
+}
+.review-title{
+  font-family:var(--font-display);
+  font-size:17px;font-weight:600;
+  color:var(--neutral-900);letter-spacing:-0.2px;
+  margin-bottom:10px;line-height:1.35;
+}
+.review-meta-row{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.review-meta-chip{
+  display:flex;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:var(--radius-full);
+  background:var(--neutral-100);border:1px solid var(--neutral-200);
+  font-size:11px;font-weight:600;color:var(--neutral-600);
+}
+.review-meta-chip.green{background:var(--green-50);border-color:var(--green-100);color:var(--green-700);}
+
+.review-checklist{
+  display:flex;flex-direction:column;gap:8px;
+  padding:16px;background:var(--neutral-50);
+  border:1.5px solid var(--neutral-200);
+  border-radius:var(--radius-xl);margin-bottom:16px;
+}
+.check-item{
+  display:flex;align-items:center;gap:10px;
+}
+.check-icon{font-size:14px;}
+.check-label{font-size:13px;color:var(--neutral-700);}
+.check-label strong{color:var(--neutral-900);}
+.check-edit{
+  margin-left:auto;font-size:12px;font-weight:600;
+  color:var(--green-700);background:none;border:none;cursor:pointer;
+}
+
+.publish-note{
+  display:flex;gap:10px;
+  padding:12px 14px;
+  background:var(--green-50);border:1px solid var(--green-100);
+  border-radius:var(--radius-lg);margin-bottom:24px;
+  align-items:flex-start;
+}
+.publish-note-icon{font-size:16px;flex-shrink:0;}
+.publish-note-text{font-size:12px;color:var(--green-700);line-height:1.5;}
+
+/* ── Bottom nav ── */
+.bottom-bar{
+  position:sticky;bottom:0;
+  background:rgba(255,255,255,0.97);
+  backdrop-filter:blur(16px);
+  border-top:1px solid var(--neutral-200);
+  padding:14px 20px 24px;
+  display:flex;gap:10px;z-index:100;
+}
+.btn-secondary{
+  flex:1;padding:14px;
+  border-radius:var(--radius-xl);
+  border:1.5px solid var(--neutral-200);
+  background:var(--neutral-0);
+  font-family:var(--font-body);font-size:15px;font-weight:600;
+  color:var(--neutral-600);cursor:pointer;transition:all 0.18s;
+}
+.btn-secondary:active{background:var(--neutral-100);}
+.btn-primary{
+  flex:2;padding:14px;
+  border-radius:var(--radius-xl);
+  border:none;
+  background:linear-gradient(135deg,var(--green-700) 0%,var(--green-600) 100%);
+  font-family:var(--font-body);font-size:15px;font-weight:600;
+  color:#fff;cursor:pointer;
+  box-shadow:0 4px 14px rgba(45,106,79,0.35);
+  transition:all 0.18s;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.btn-primary:active{transform:scale(0.98);box-shadow:0 2px 8px rgba(45,106,79,0.25);}
+.btn-publish{
+  flex:1;padding:14px;border-radius:var(--radius-xl);border:none;
+  background:linear-gradient(135deg,var(--terra-500) 0%,var(--terra-600) 100%);
+  font-family:var(--font-body);font-size:15px;font-weight:700;
+  color:#fff;cursor:pointer;
+  box-shadow:0 4px 14px rgba(224,122,95,0.4);
+  transition:all 0.18s;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.btn-publish:active{transform:scale(0.98);}
+
+::-webkit-scrollbar{width:0;}
+select.field-input{background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23A8A49C' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:36px;}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <button class="back-btn" onclick="prevStep()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="m12 5-7 7 7 7"/></svg>
+  </button>
+  <div class="header-title" id="headerTitle">Share Your Journey</div>
+  <button class="draft-btn">Save draft</button>
+</header>
+
+<!-- Progress -->
+<div class="progress-wrap">
+  <div class="steps-row">
+    <div class="step-item active" data-step="1" onclick="goToStep(1)">
+      <div class="step-circle" id="sc1">1</div>
+      <div class="step-label">Info</div>
+    </div>
+    <div class="step-item" data-step="2" onclick="goToStep(2)">
+      <div class="step-circle" id="sc2">2</div>
+      <div class="step-label">Photos</div>
+    </div>
+    <div class="step-item" data-step="3" onclick="goToStep(3)">
+      <div class="step-circle" id="sc3">3</div>
+      <div class="step-label">Map</div>
+    </div>
+    <div class="step-item" data-step="4" onclick="goToStep(4)">
+      <div class="step-circle" id="sc4">4</div>
+      <div class="step-label">Details</div>
+    </div>
+    <div class="step-item" data-step="5" onclick="goToStep(5)">
+      <div class="step-circle" id="sc5">5</div>
+      <div class="step-label">Review</div>
+    </div>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progressFill" style="width:20%"></div>
+  </div>
+</div>
+
+<div class="steps-container">
+
+  <!-- Step 1: Basic Info -->
+  <div class="step-panel active" id="step1">
+    <div class="panel-eyebrow">Step 1 of 5</div>
+    <h2 class="panel-title">Tell us about<br><em style="font-style:italic;font-weight:300">your experience</em></h2>
+    <p class="panel-subtitle">A great title and description help others discover your journey.</p>
+
+    <div class="field">
+      <label class="field-label">Title <span>*</span></label>
+      <input class="field-input" type="text" id="titleInput" placeholder="e.g. Three days in the Sundarbans…" maxlength="100" oninput="updateCount(this,'titleCount',100)">
+      <div class="field-count"><span id="titleCount">0</span>/100</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Description <span>*</span></label>
+      <textarea class="field-input" id="descInput" placeholder="Share what made this experience special — the sights, sounds, people you met…" maxlength="1000" oninput="updateCount(this,'descCount',1000)"></textarea>
+      <div class="field-count"><span id="descCount">0</span>/1000</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Category <span>*</span></label>
+      <div class="category-grid">
+        <div class="category-card selected" onclick="selectCategory(this)">
+          <span class="category-icon">🌿</span>
+          <span class="category-name">Nature</span>
+        </div>
+        <div class="category-card" onclick="selectCategory(this)">
+          <span class="category-icon">🏛</span>
+          <span class="category-name">Heritage</span>
+        </div>
+        <div class="category-card" onclick="selectCategory(this)">
+          <span class="category-icon">🧗</span>
+          <span class="category-name">Adventure</span>
+        </div>
+        <div class="category-card" onclick="selectCategory(this)">
+          <span class="category-icon">🏖</span>
+          <span class="category-name">Beach</span>
+        </div>
+        <div class="category-card" onclick="selectCategory(this)">
+          <span class="category-icon">🍛</span>
+          <span class="category-name">Food</span>
+        </div>
+        <div class="category-card" onclick="selectCategory(this)">
+          <span class="category-icon">🕌</span>
+          <span class="category-name">Spiritual</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Location <span>*</span></label>
+      <div class="location-row">
+        <div class="field">
+          <select class="field-input">
+            <option value="">Division</option>
+            <option>Dhaka</option>
+            <option>Chittagong</option>
+            <option selected>Khulna</option>
+            <option>Rajshahi</option>
+            <option>Sylhet</option>
+            <option>Barisal</option>
+            <option>Rangpur</option>
+            <option>Mymensingh</option>
+          </select>
+        </div>
+        <div class="field">
+          <select class="field-input">
+            <option value="">District</option>
+            <option selected>Khulna</option>
+            <option>Bagerhat</option>
+            <option>Satkhira</option>
+          </select>
+        </div>
+      </div>
+      <p class="field-hint">📍 You'll pin the exact location on a map in Step 3.</p>
+    </div>
+  </div>
+
+  <!-- Step 2: Photos -->
+  <div class="step-panel" id="step2">
+    <div class="panel-eyebrow">Step 2 of 5</div>
+    <h2 class="panel-title">Add your <em style="font-style:italic;font-weight:300">photos</em></h2>
+    <p class="panel-subtitle">Up to 10 photos. The first one becomes your cover photo.</p>
+
+    <div class="photo-grid-upload">
+      <div class="photo-thumb-upload">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop" alt="">
+        <button class="photo-remove">
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="photo-cover-badge">Cover</div>
+      </div>
+      <div class="photo-thumb-upload">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=200&h=200&fit=crop" alt="">
+        <button class="photo-remove">
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="photo-thumb-upload">
+        <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=200&h=200&fit=crop" alt="">
+        <button class="photo-remove">
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="add-more-thumb" onclick="alert('File picker would open here')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" color="var(--neutral-400)"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>Add more</span>
+      </div>
+    </div>
+
+    <div class="photo-tip">
+      <div class="photo-tip-icon">💡</div>
+      <div class="photo-tip-text"><strong>Tip:</strong> Drag to reorder photos. Landscape shots work best as the cover. Max 10 MB per photo — JPG, PNG, or WebP.</div>
+    </div>
+  </div>
+
+  <!-- Step 3: Map -->
+  <div class="step-panel" id="step3">
+    <div class="panel-eyebrow">Step 3 of 5</div>
+    <h2 class="panel-title">Pin your <em style="font-style:italic;font-weight:300">location</em></h2>
+    <p class="panel-subtitle">Tap the map to place your pin. Optionally add a travel route.</p>
+
+    <div class="map-container">
+      <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=700&h=440&fit=crop&q=70" alt="Map">
+      <div class="map-pin-placed">
+        <div class="pin-head"></div>
+        <div class="pin-shadow"></div>
+      </div>
+      <div class="map-controls">
+        <button class="map-ctrl-btn">+</button>
+        <button class="map-ctrl-btn">−</button>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:16px">
+      <label class="field-label">Location Name</label>
+      <input class="field-input" type="text" value="Sundarbans, Khulna" placeholder="e.g. Cox's Bazar Beach">
+    </div>
+
+    <div class="route-toggle-row" onclick="toggleRoute()">
+      <div class="route-toggle-info">
+        <div class="route-toggle-label">Add travel route</div>
+        <div class="route-toggle-sub">Mark the stops along your journey</div>
+      </div>
+      <div class="toggle-switch on" id="routeToggle">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+
+    <div class="route-stops-editor" id="routeEditor">
+      <div class="route-stop-row">
+        <div class="stop-indicator filled"></div>
+        <input class="stop-input" type="text" placeholder="Starting point…" value="Dhaka — Sadarghat">
+        <span class="stop-drag">⋮⋮</span>
+      </div>
+      <div class="route-stop-row">
+        <div class="stop-indicator"></div>
+        <input class="stop-input" type="text" placeholder="Next stop…" value="Mongla Port">
+        <span class="stop-drag">⋮⋮</span>
+      </div>
+      <div class="route-stop-row">
+        <div class="stop-indicator"></div>
+        <input class="stop-input" type="text" placeholder="Next stop…" value="Karamjal Wildlife Centre">
+        <span class="stop-drag">⋮⋮</span>
+      </div>
+      <div class="route-stop-row">
+        <div class="stop-indicator filled" style="border-color:var(--terra-500);background:var(--terra-500)"></div>
+        <input class="stop-input" type="text" placeholder="Final destination…" value="Kotka Beach Camp">
+        <span class="stop-drag">⋮⋮</span>
+      </div>
+      <button class="add-stop-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add stop
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 4: Travel Details -->
+  <div class="step-panel" id="step4">
+    <div class="panel-eyebrow">Step 4 of 5</div>
+    <h2 class="panel-title">Trip <em style="font-style:italic;font-weight:300">details</em></h2>
+    <p class="panel-subtitle">Help others plan their own trip with dates, cost, and tips.</p>
+
+    <div class="field">
+      <label class="field-label">Travel Dates</label>
+      <div class="date-row">
+        <div class="field">
+          <label class="field-label" style="font-size:10px;color:var(--neutral-400)">FROM</label>
+          <input class="field-input" type="date" value="2024-03-10">
+        </div>
+        <div class="field">
+          <label class="field-label" style="font-size:10px;color:var(--neutral-400)">TO</label>
+          <input class="field-input" type="date" value="2024-03-12">
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Your Rating <span>*</span></label>
+      <div class="rating-select" id="ratingStars">
+        <button class="rating-star-btn active" data-val="1" onclick="setRating(1)">★</button>
+        <button class="rating-star-btn active" data-val="2" onclick="setRating(2)">★</button>
+        <button class="rating-star-btn active" data-val="3" onclick="setRating(3)">★</button>
+        <button class="rating-star-btn active" data-val="4" onclick="setRating(4)">★</button>
+        <button class="rating-star-btn active" data-val="5" onclick="setRating(5)">★</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Cost Breakdown (৳ BDT, per person)</label>
+      <div class="cost-inputs">
+        <div class="cost-input-row">
+          <div class="cost-row-icon">🚌</div>
+          <span class="cost-row-label">Transport</span>
+          <span class="bdt-symbol">৳</span>
+          <input class="cost-row-input" type="number" placeholder="0" value="800">
+        </div>
+        <div class="cost-input-row">
+          <div class="cost-row-icon">🏨</div>
+          <span class="cost-row-label">Accommodation</span>
+          <span class="bdt-symbol">৳</span>
+          <input class="cost-row-input" type="number" placeholder="0" value="600">
+        </div>
+        <div class="cost-input-row">
+          <div class="cost-row-icon">🍽</div>
+          <span class="cost-row-label">Food & Drinks</span>
+          <span class="bdt-symbol">৳</span>
+          <input class="cost-row-input" type="number" placeholder="0" value="450">
+        </div>
+        <div class="cost-input-row">
+          <div class="cost-row-icon">🎫</div>
+          <span class="cost-row-label">Entry / Permits</span>
+          <span class="bdt-symbol">৳</span>
+          <input class="cost-row-input" type="number" placeholder="0" value="150">
+        </div>
+        <div class="cost-input-row">
+          <div class="cost-row-icon">➕</div>
+          <span class="cost-row-label">Other</span>
+          <span class="bdt-symbol">৳</span>
+          <input class="cost-row-input" type="number" placeholder="0" value="1200">
+        </div>
+      </div>
+      <p class="field-hint">Total: <strong style="color:var(--green-700)">৳ 3,200</strong></p>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Travel Tips</label>
+      <textarea class="field-input" placeholder="Share practical tips — best time to visit, what to bring, things to avoid…" style="height:90px">Book your guide from Mongla forest office. Carry mosquito repellent and cash. Stay silent on the boat for better wildlife sightings.</textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Tags</label>
+      <input class="field-input" type="text" value="#sundarbans, #nature, #wildlife, #mangrove" placeholder="e.g. #beach, #heritage">
+      <p class="field-hint">Separate tags with commas.</p>
+    </div>
+  </div>
+
+  <!-- Step 5: Review -->
+  <div class="step-panel" id="step5">
+    <div class="panel-eyebrow">Step 5 of 5</div>
+    <h2 class="panel-title">Review &<br><em style="font-style:italic;font-weight:300">publish</em></h2>
+    <p class="panel-subtitle">Everything looks great! Review before sharing with the community.</p>
+
+    <div class="review-card">
+      <div class="review-photo">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&h=320&fit=crop&q=80" alt="">
+        <div class="review-photo-count">📷 3 photos</div>
+      </div>
+      <div class="review-body">
+        <div class="review-location">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          Khulna Division · Nature
+        </div>
+        <div class="review-title">Three Days Deep in the Sundarbans Mangrove Forest</div>
+        <div class="review-meta-row">
+          <div class="review-meta-chip">⭐ 5.0</div>
+          <div class="review-meta-chip green">৳ 3,200</div>
+          <div class="review-meta-chip">🗓 3 days</div>
+          <div class="review-meta-chip">🗺 4 stops</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-checklist">
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <span class="check-label"><strong>Title & description</strong> — added</span>
+        <button class="check-edit" onclick="goToStep(1)">Edit</button>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <span class="check-label"><strong>3 photos</strong> — uploaded</span>
+        <button class="check-edit" onclick="goToStep(2)">Edit</button>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <span class="check-label"><strong>Location pinned</strong> — Khulna</span>
+        <button class="check-edit" onclick="goToStep(3)">Edit</button>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <span class="check-label"><strong>Travel details</strong> — cost, dates, tips</span>
+        <button class="check-edit" onclick="goToStep(4)">Edit</button>
+      </div>
+    </div>
+
+    <div class="publish-note">
+      <span class="publish-note-icon">🌍</span>
+      <div class="publish-note-text">Your experience will be visible to everyone on Tour Bangladesh. You can edit or delete it anytime from your profile.</div>
+    </div>
+  </div>
+
+</div><!-- /steps -->
+
+<!-- Bottom Bar -->
+<div class="bottom-bar" id="bottomBar">
+  <button class="btn-secondary" onclick="prevStep()">Back</button>
+  <button class="btn-primary" id="nextBtn" onclick="nextStep()">
+    Continue
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </button>
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 5;
+const stepTitles = ['Share Your Journey','Add Photos','Pin Location','Trip Details','Review & Publish'];
+
+function goToStep(n) {
+  if (n < 1 || n > totalSteps) return;
+  document.getElementById(`step${currentStep}`).classList.remove('active');
+  document.querySelectorAll('.step-item').forEach((el, i) => {
+    el.classList.remove('active','done');
+    if (i + 1 < n) el.classList.add('done');
+    if (i + 1 === n) el.classList.add('active');
+  });
+  // Update step circles
+  for (let i = 1; i <= totalSteps; i++) {
+    const sc = document.getElementById(`sc${i}`);
+    if (i < n) sc.innerHTML = '✓';
+    else sc.textContent = i;
+  }
+  currentStep = n;
+  document.getElementById(`step${currentStep}`).classList.add('active');
+  document.getElementById('progressFill').style.width = `${(n / totalSteps) * 100}%`;
+  document.getElementById('headerTitle').textContent = stepTitles[n - 1];
+
+  // Last step: show publish button
+  const nextBtn = document.getElementById('nextBtn');
+  if (n === totalSteps) {
+    nextBtn.outerHTML = `<button class="btn-publish" id="nextBtn" onclick="alert('Experience published! 🎉')">
+      Publish
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>`;
+  } else if (document.getElementById('nextBtn').classList.contains('btn-publish')) {
+    document.getElementById('nextBtn').outerHTML = `<button class="btn-primary" id="nextBtn" onclick="nextStep()">
+      Continue
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </button>`;
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextStep() { goToStep(currentStep + 1); }
+function prevStep() { goToStep(currentStep - 1); }
+
+function selectCategory(el) {
+  document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function updateCount(el, countId, max) {
+  document.getElementById(countId).textContent = el.value.length;
+}
+
+function setRating(val) {
+  document.querySelectorAll('.rating-star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < val);
+  });
+}
+
+let routeOn = true;
+function toggleRoute() {
+  routeOn = !routeOn;
+  document.getElementById('routeToggle').classList.toggle('on', routeOn);
+  document.getElementById('routeEditor').style.display = routeOn ? 'flex' : 'none';
+}
+</script>
+</body>
+</html>

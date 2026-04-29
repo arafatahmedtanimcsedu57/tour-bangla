@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=375, initial-scale=1.0">
+<title>Tour Bangladesh — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --green-900: #0A2618;
+  --green-800: #1B4332;
+  --green-700: #2D6A4F;
+  --green-600: #40916C;
+  --green-500: #52B788;
+  --green-100: #DCFCE7;
+  --green-50:  #F0FDF4;
+
+  --terra-600: #C85B3F;
+  --terra-500: #E07A5F;
+  --terra-400: #F4A261;
+  --terra-100: #FFE4D6;
+  --terra-50:  #FFF5F0;
+
+  --neutral-900: #1A1917;
+  --neutral-800: #2A2825;
+  --neutral-700: #403D38;
+  --neutral-600: #5C5751;
+  --neutral-500: #79746B;
+  --neutral-400: #A8A49C;
+  --neutral-300: #D1CEC7;
+  --neutral-200: #E8E6E1;
+  --neutral-100: #F5F4F0;
+  --neutral-50:  #FAFAF8;
+  --neutral-0:   #FFFFFF;
+
+  --yellow-400: #FACC15;
+
+  --font-display: 'Fraunces', serif;
+  --font-body:    'Plus Jakarta Sans', sans-serif;
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(26,25,23,0.08), 0 1px 2px rgba(26,25,23,0.06);
+  --shadow-md: 0 4px 12px rgba(26,25,23,0.10), 0 2px 6px rgba(26,25,23,0.06);
+  --shadow-lg: 0 8px 24px rgba(26,25,23,0.12), 0 4px 8px rgba(26,25,23,0.06);
+  --shadow-card: 0 2px 8px rgba(26,25,23,0.08), 0 0 1px rgba(26,25,23,0.04);
+
+  /* Nav height reserved */
+  --nav-h: 72px;
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  background: var(--neutral-50);
+  color: var(--neutral-900);
+  min-height: 100vh;
+  max-width: 375px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── Noise texture overlay ───────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── Header ──────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--neutral-200);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--green-700) 0%, var(--green-500) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.logo-mark svg { width: 16px; height: 16px; }
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  letter-spacing: -0.2px;
+  line-height: 1;
+}
+.logo-text span {
+  color: var(--green-700);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--neutral-700);
+  position: relative;
+  transition: background 0.15s;
+}
+.icon-btn:active { background: var(--neutral-100); }
+.notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--terra-500);
+  border: 1.5px solid var(--neutral-50);
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  margin: 16px 16px 0;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  height: 180px;
+  background: linear-gradient(135deg,
+    var(--green-800) 0%,
+    var(--green-700) 40%,
+    var(--green-600) 70%,
+    var(--terra-600) 100%
+  );
+}
+
+/* Animated gradient orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.5;
+  animation: float 8s ease-in-out infinite;
+}
+.hero-orb-1 {
+  width: 160px; height: 160px;
+  background: var(--green-500);
+  top: -40px; right: -20px;
+  animation-delay: 0s;
+}
+.hero-orb-2 {
+  width: 120px; height: 120px;
+  background: var(--terra-400);
+  bottom: -30px; left: 20px;
+  animation-delay: -3s;
+}
+.hero-orb-3 {
+  width: 80px; height: 80px;
+  background: var(--yellow-400);
+  top: 20px; left: 60px;
+  opacity: 0.2;
+  animation-delay: -6s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(8px, -8px) scale(1.05); }
+  66%       { transform: translate(-6px, 6px) scale(0.97); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 24px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+.hero-title em {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.85);
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-stat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+.hero-stat-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+}
+
+/* ── Filter chips ────────────────────────────────────────── */
+.filters-wrap {
+  position: sticky;
+  top: 59px;
+  z-index: 90;
+  background: rgba(250, 250, 248, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 12px 0;
+  margin-top: 16px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.filters-scroll {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+.filters-scroll::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  border: 1.5px solid var(--neutral-200);
+  background: var(--neutral-0);
+  color: var(--neutral-600);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.chip.active {
+  background: var(--green-700);
+  border-color: var(--green-700);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(45,106,79,0.3);
+}
+.chip:not(.active):active {
+  background: var(--neutral-100);
+}
+.chip-icon { font-size: 14px; }
+
+/* ── Section header ──────────────────────────────────────── */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 20px 16px 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  letter-spacing: -0.3px;
+}
+.section-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green-700);
+  text-decoration: none;
+}
+
+/* ── Feed ────────────────────────────────────────────────── */
+.feed {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: calc(var(--nav-h) + 16px);
+}
+
+/* ── Experience Card ─────────────────────────────────────── */
+.card {
+  background: var(--neutral-0);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--neutral-200);
+  animation: cardIn 0.5s ease both;
+}
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.12s; }
+.card:nth-child(3) { animation-delay: 0.19s; }
+.card:nth-child(4) { animation-delay: 0.26s; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card photo */
+.card-photo {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+.card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.card:active .card-photo img {
+  transform: scale(1.03);
+}
+
+/* gradient fade at bottom of photo */
+.card-photo::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: linear-gradient(to top, rgba(26,25,23,0.55) 0%, transparent 100%);
+}
+
+.location-badge {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: var(--radius-full);
+  padding: 4px 10px 4px 6px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.location-badge svg { width: 10px; height: 10px; opacity: 0.9; }
+
+.card-save-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.15s;
+}
+.card-save-btn:active { background: rgba(255,255,255,0.35); }
+
+/* Card body */
+.card-body { padding: 14px 14px 0; }
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-author {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+.avatar {
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--neutral-200);
+}
+.avatar-sm { width: 24px; height: 24px; }
+.author-info { flex: 1; min-width: 0; }
+.author-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--neutral-700);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.author-date {
+  font-size: 11px;
+  color: var(--neutral-400);
+  margin-top: 1px;
+}
+
+/* Card meta row */
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--neutral-100);
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.star {
+  width: 13px;
+  height: 13px;
+  color: var(--yellow-400);
+}
+.star.empty { color: var(--neutral-200); }
+
+.meta-divider {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: var(--neutral-300);
+  flex-shrink: 0;
+}
+
+.cost-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--green-50);
+  border: 1px solid var(--green-100);
+  border-radius: var(--radius-sm);
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green-700);
+}
+
+.rating-count {
+  font-size: 11px;
+  color: var(--neutral-500);
+  font-weight: 500;
+}
+
+/* Card actions */
+.card-actions {
+  display: flex;
+  align-items: center;
+  padding: 4px 4px;
+}
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 4px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--neutral-500);
+  transition: all 0.15s;
+}
+.action-btn svg { width: 17px; height: 17px; }
+.action-btn:active { background: var(--neutral-100); }
+.action-btn.liked { color: var(--terra-500); }
+.action-btn.liked svg { fill: var(--terra-500); }
+
+/* ── Bottom Nav ──────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 375px;
+  height: var(--nav-h);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px 8px;
+  z-index: 200;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 0;
+  cursor: pointer;
+  position: relative;
+  border: none;
+  background: transparent;
+}
+.nav-item svg { width: 22px; height: 22px; }
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--neutral-400);
+  letter-spacing: 0.1px;
+}
+.nav-item.active .nav-label { color: var(--green-700); }
+.nav-item.active svg { color: var(--green-700); }
+.nav-active-dot {
+  position: absolute;
+  top: 4px;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--green-700);
+}
+
+/* Create button */
+.nav-create {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+}
+.nav-create-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--terra-500) 0%, var(--terra-600) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(224,122,95,0.4);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.nav-create:active .nav-create-btn {
+  transform: scale(0.93);
+  box-shadow: 0 2px 6px rgba(224,122,95,0.3);
+}
+.nav-create-btn svg { width: 20px; height: 20px; color: #fff; }
+.nav-create .nav-label { color: var(--neutral-400); font-size: 10px; font-weight: 500; }
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 0; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5" fill="white" stroke="none"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">Tour <span>Bangladesh</span></div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+    </button>
+    <button class="icon-btn" aria-label="Notifications">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+      </svg>
+      <span class="notif-dot"></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-content">
+    <div>
+      <p class="hero-eyebrow">✦ Explore Bangladesh</p>
+      <h1 class="hero-title">Discover<br><em>the beauty</em><br>within.</h1>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        1,240 places
+      </div>
+      <div class="hero-stat-dot"></div>
+      <div class="hero-stat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        8.4k travellers
+      </div>
+      <div class="hero-stat-dot"></div>
+      <div class="hero-stat">8 Divisions</div>
+    </div>
+  </div>
+</section>
+
+<!-- Filters -->
+<div class="filters-wrap">
+  <div class="filters-scroll">
+    <button class="chip active"><span class="chip-icon">✦</span> All</button>
+    <button class="chip"><span class="chip-icon">🌿</span> Nature</button>
+    <button class="chip"><span class="chip-icon">🏛</span> Heritage</button>
+    <button class="chip"><span class="chip-icon">🧗</span> Adventure</button>
+    <button class="chip"><span class="chip-icon">🏖</span> Beach</button>
+    <button class="chip"><span class="chip-icon">🍛</span> Food</button>
+    <button class="chip"><span class="chip-icon">🕌</span> Spiritual</button>
+  </div>
+</div>
+
+<!-- Feed -->
+<div class="section-header">
+  <h2 class="section-title">Recent Experiences</h2>
+  <a href="#" class="section-link">See all</a>
+</div>
+
+<div class="feed">
+
+  <!-- Card 1 -->
+  <article class="card">
+    <div class="card-photo">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop&q=80" alt="Sundarbans">
+      <div class="location-badge">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Khulna
+      </div>
+      <button class="card-save-btn" aria-label="Save">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+      </button>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Three Days Deep in the Sundarbans Mangrove Forest</h3>
+      <div class="card-author">
+        <img src="https://i.pravatar.cc/48?img=3" alt="Rafi" class="avatar avatar-sm">
+        <div class="author-info">
+          <div class="author-name">Rafi Hossain</div>
+          <div class="author-date">12 Apr 2024</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="cost-badge">৳ 3,200</div>
+        <div class="meta-divider"></div>
+        <div class="rating-count">248 likes</div>
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="action-btn liked">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        248
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        32
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+    </div>
+  </article>
+
+  <!-- Card 2 -->
+  <article class="card">
+    <div class="card-photo">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop&q=80" alt="Cox's Bazar">
+      <div class="location-badge">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Chittagong
+      </div>
+      <button class="card-save-btn" aria-label="Save">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+      </button>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Sunrise at Cox's Bazar — World's Longest Sea Beach</h3>
+      <div class="card-author">
+        <img src="https://i.pravatar.cc/48?img=12" alt="Tasnim" class="avatar avatar-sm">
+        <div class="author-info">
+          <div class="author-name">Tasnim Akter</div>
+          <div class="author-date">8 Apr 2024</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star empty" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="cost-badge">৳ 4,800</div>
+        <div class="meta-divider"></div>
+        <div class="rating-count">185 likes</div>
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        185
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        19
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+    </div>
+  </article>
+
+  <!-- Card 3 -->
+  <article class="card">
+    <div class="card-photo">
+      <img src="https://images.unsplash.com/photo-1571406252241-db0280bd36cd?w=600&h=400&fit=crop&q=80" alt="Sylhet">
+      <div class="location-badge">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+        Sylhet
+      </div>
+      <button class="card-save-btn" aria-label="Save">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+      </button>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">Lost Among the Tea Gardens of Srimangal</h3>
+      <div class="card-author">
+        <img src="https://i.pravatar.cc/48?img=22" alt="Mamun" class="avatar avatar-sm">
+        <div class="author-info">
+          <div class="author-name">Mamun Khan</div>
+          <div class="author-date">3 Apr 2024</div>
+        </div>
+      </div>
+      <div class="card-meta">
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="meta-divider"></div>
+        <div class="cost-badge">৳ 2,500</div>
+        <div class="meta-divider"></div>
+        <div class="rating-count">312 likes</div>
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        312
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        47
+      </button>
+      <button class="action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+    </div>
+  </article>
+
+</div><!-- /feed -->
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <button class="nav-item active" aria-label="Home">
+    <span class="nav-active-dot"></span>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22" fill="none" stroke="white" stroke-width="2"/></svg>
+    <span class="nav-label">Home</span>
+  </button>
+  <button class="nav-item" aria-label="Explore">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <span class="nav-label">Explore</span>
+  </button>
+  <button class="nav-create" aria-label="Create">
+    <div class="nav-create-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </div>
+    <span class="nav-label">Create</span>
+  </button>
+  <button class="nav-item" aria-label="Feed">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span class="nav-label">Feed</span>
+  </button>
+  <button class="nav-item" aria-label="Profile">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="nav-label">Profile</span>
+  </button>
+</nav>
+
+<script>
+// Filter chip interaction
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+  });
+});
+
+// Like button toggle
+document.querySelectorAll('.action-btn').forEach(btn => {
+  if (btn.querySelector('path[d*="M20.84"]')) {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('liked');
+      const svg = btn.querySelector('svg');
+      if (btn.classList.contains('liked')) {
+        svg.setAttribute('fill', 'currentColor');
+      } else {
+        svg.setAttribute('fill', 'none');
+      }
+    });
+  }
+});
+
+// Save button toggle
+document.querySelectorAll('.card-save-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btn.style.background = btn.style.background ? '' : 'rgba(255,255,255,0.4)';
+  });
+});
+</script>
+</body>
+</html>
